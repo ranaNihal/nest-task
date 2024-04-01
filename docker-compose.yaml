@@ -1,0 +1,57 @@
+version: '3.8'
+
+services: 
+  my_service:
+    build:
+      context: .  # Path to the directory containing the Dockerfile
+      dockerfile: Dockerfile  # Optional: Specify the name of the Dockerfile if it's not named "Dockerfile"
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/home/ditsdev199/Desktop/nest-task
+
+
+########################### connection for mysql ##############################
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: password
+      MYSQL_DATABASE: nest_task
+    ports:
+      - 3307:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "3007:80"
+    environment:
+      PMA_HOST: mysql
+
+
+
+
+########################### connection for postgresSql ##############################
+  # postgres:
+  #   image: postgres:latest
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: root
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: nest_task
+  #   ports:
+  #     - 5433:5432
+
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: my_pgadmin
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: your_email@example.com
+  #     PGADMIN_DEFAULT_PASSWORD: your_pgadmin_password
+  #     PGADMIN_DEFAULT_SERVER: postgres
+  #   ports:
+  #     - "5050:80"
